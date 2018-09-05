@@ -122,7 +122,7 @@ int main()
 	//SHADER INIT
 	Shader core_program("vertex_core.glsl", "fragment_core.glsl");
 
-	//MODEL
+	//MODEL MESH
 
 	//VAO, VBO, EBO
 	//GEN VAO AND BIND
@@ -167,6 +167,9 @@ int main()
 	//TEXTURE 1
 	Texture texture1("Images/container.png", GL_TEXTURE_2D, 1);
 
+	//MATERIAL 0
+	Material material0(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), texture0.getTextureUnit(), texture1.getTextureUnit());
+
 	//INIT MATRICES
 	glm::vec3 position(0.f);
 	glm::vec3 rotation(0.f);
@@ -202,7 +205,6 @@ int main()
 	glm::vec3 lightPos0(0.f, 0.f, 1.f);
 
 	//INIT UNIFORMS
-	
 	core_program.setMat4fv(ModelMatrix, "ModelMatrix");
 	core_program.setMat4fv(ViewMatrix, "ViewMatrix");
 	core_program.setMat4fv(ProjectionMatrix, "ProjectionMatrix");
@@ -228,6 +230,7 @@ int main()
 		//Update uniforms
 		core_program.set1i(texture0.getTextureUnit(), "texture0");
 		core_program.set1i(texture1.getTextureUnit(), "texture1");
+		material0.sendToShader(core_program);
 
 		//Move, rotate and scale
 		ModelMatrix = glm::mat4(1.f);

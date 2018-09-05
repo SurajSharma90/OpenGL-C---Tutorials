@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>

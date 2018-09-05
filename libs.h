@@ -20,6 +20,7 @@
 
 #include"Shader.h"
 #include"Texture.h"
+#include"Material.h"
 
 struct Vertex
 {
