@@ -52,33 +52,54 @@ void updateInput(GLFWwindow* window, Mesh &mesh)
 	}
 }
 
-int main()
+GLFWwindow* createWindow(
+	const char* title,
+	const int width, const int height,
+	int& fbWidth, int& fbHeight,
+	const int GLmajorVer, const int GLminorVer,
+	bool resizable
+)
 {
-	//INIT GLFW
-	glfwInit();
-
-	//CREATE WINDOW
-	const int WINDOW_WIDTH = 640;
-	const int WINDOW_HEIGHT = 480;
-	int framebufferWidth = 0;
-	int framebufferHeight = 0;
-
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLmajorVer);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLminorVer);
+	glfwWindowHint(GLFW_RESIZABLE, resizable);
 
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); MAC OS
 
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "YOUTUBE_TUTORIAL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, title, NULL, NULL);
 
-	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+	glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
 	glfwSetFramebufferSizeCallback(window, framebuffer_resize_callback);
 	//IMPORTANT WHITH PERSPECTIVE MATRIX!!!
 
 	//glViewport(0, 0, framebufferWidth, framebufferHeight);
 
 	glfwMakeContextCurrent(window); //IMPORTANT!!
+
+	return window;
+}
+
+int main()
+{
+	//INIT GLFW
+	glfwInit();
+
+	//CREATE WINDOW
+	const int GLmajorVersion = 4;
+	const int GLminorVersion = 5;
+	const int WINDOW_WIDTH = 640;
+	const int WINDOW_HEIGHT = 480;
+	int framebufferWidth = WINDOW_WIDTH;
+	int framebufferHeight = WINDOW_HEIGHT;
+
+	GLFWwindow* window = createWindow(
+		"YOUTUBE_TUTORIAL",
+		WINDOW_WIDTH, WINDOW_HEIGHT,
+		framebufferWidth, framebufferHeight,
+		GLmajorVersion, GLminorVersion,
+		false
+	);
 
 	//INIT GLEW (NEEDS WINDOW AND OPENGL CONTEXT)
 	glewExperimental = GL_TRUE;
@@ -103,7 +124,8 @@ int main()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//SHADER INIT
-	Shader core_program("vertex_core.glsl", "fragment_core.glsl");
+	Shader core_program(GLmajorVersion, GLminorVersion,
+		"vertex_core.glsl", "fragment_core.glsl");
 
 	//MODEL MESH
 	Mesh test(&Quad(),
