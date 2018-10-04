@@ -48,5 +48,4 @@ public:
 		program.set1i(this->diffuseTex, "material.diffuseTex");
 		program.set1i(this->specularTex, "material.specularTex");
 	}
-
 };

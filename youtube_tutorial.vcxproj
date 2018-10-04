@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Linking\GLEW\include;$(SolutionDir)\Linking\GLFW\include;$(SolutionDir)\Linking\GLM\include;$(SolutionDir)\Linking\SOIL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Linking\GLEW\include;$(SolutionDir)\Linking\GLFW\include;$(SolutionDir)\Linking\GLM\include;$(SolutionDir)\Linking\SOIL2\include;$(SolutionDir)\Linking\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\Linking\GLEW\lib;$(SolutionDir)\Linking\GLFW\lib;$(SolutionDir)\Linking\SOIL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -96,7 +96,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Linking\GLEW\include;$(SolutionDir)\Linking\GLFW\include;$(SolutionDir)\Linking\GLM\include;$(SolutionDir)\Linking\SOIL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Linking\GLEW\include;$(SolutionDir)\Linking\GLFW\include;$(SolutionDir)\Linking\GLM\include;$(SolutionDir)\Linking\SOIL2\include;$(SolutionDir)\Linking\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -119,9 +119,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="libs.h" />
