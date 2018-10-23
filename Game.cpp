@@ -91,9 +91,11 @@ void Game::initTextures()
 {
 	//TEXTURE 0
 	this->textures.push_back(new Texture("Images/pusheen.png", GL_TEXTURE_2D));
+	this->textures.push_back(new Texture("Images/pusheen_specular.png", GL_TEXTURE_2D));
 
 	//TEXTURE 1
 	this->textures.push_back(new Texture("Images/container.png", GL_TEXTURE_2D));
+	this->textures.push_back(new Texture("Images/container_specular.png", GL_TEXTURE_2D));
 }
 
 void Game::initMaterials()
@@ -106,7 +108,7 @@ void Game::initMeshes()
 {
 	this->meshes.push_back(
 		new Mesh(
-			&Quad(),
+			&Pyramid(),
 			glm::vec3(0.f),
 			glm::vec3(0.f),
 			glm::vec3(1.f)
@@ -140,9 +142,6 @@ void Game::initUniforms()
 
 void Game::updateUniforms()
 {
-	//Update uniforms
-	this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
-
 	//Update framebuffer size and projection matrix
 	glfwGetFramebufferSize(this->window, &this->framebufferWidth, &this->framebufferHeight);
 
@@ -251,12 +250,15 @@ void Game::render()
 	//Update the uniforms
 	this->updateUniforms();
 
+	//Update uniforms
+	this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
+
 	//Use a program
 	this->shaders[SHADER_CORE_PROGRAM]->use();
 
 	//Activate texture
-	this->textures[TEX_PUSHEEN0]->bind(0);
-	this->textures[TEX_CONTAINER1]->bind(1);
+	this->textures[TEX_CONTAINER]->bind(0);
+	this->textures[TEX_CONTAINER_SPECULAR]->bind(1);
 
 	//Draw
 	this->meshes[MESH_QUAD]->render(this->shaders[SHADER_CORE_PROGRAM]);
@@ -302,6 +304,14 @@ void Game::updateInput(GLFWwindow* window, Mesh &mesh)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		mesh.move(glm::vec3(0.01f, 0.f, 0.f));
+	}
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+	{
+		mesh.move(glm::vec3(0.f, 0.01f, 0.f));
+	}
+	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+	{
+		mesh.move(glm::vec3(0.f, -0.01f, 0.f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
