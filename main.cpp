@@ -5,8 +5,8 @@
 int main()
 {
 	Game game("YOUTUBE_TUTORIAL",
-		640, 480,
-		4, 5,
+		1920, 1080,
+		4, 4,
 		false);
 
 	//MAIN LOOP

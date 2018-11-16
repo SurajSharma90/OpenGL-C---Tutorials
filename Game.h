@@ -1,6 +1,7 @@
 #pragma once
 
 #include "libs.h"
+#include "Camera.h"
 
 //ZOOOOOOOOOOOM IN BEFORE RECORDING!
 
@@ -24,6 +25,23 @@ private:
 	//OpenGL Context
 	const int GL_VERSION_MAJOR;
 	const int GL_VERSION_MINOR;
+
+	//Delta time
+	float dt;
+	float curTime;
+	float lastTime;
+
+	//Mouse Input
+	double lastMouseX;
+	double lastMouseY;
+	double mouseX;
+	double mouseY;
+	double mouseOffsetX;
+	double mouseOffsetY;
+	bool firstMouse;
+
+	//Camera
+	Camera camera;
 
 	//Matrices
 	glm::mat4 ViewMatrix;
@@ -88,11 +106,13 @@ public:
 	void setWindowShouldClose();
 
 //Functions
+	void updateDt();
+	void updateMouseInput();
+	void updateKeyboardInput();
+	void updateInput();
 	void update();
 	void render();
 
 //Static functions
 	static void framebuffer_resize_callback(GLFWwindow* window, int fbW, int fbH);
-	static void updateInput(GLFWwindow* window);
-	static void updateInput(GLFWwindow* window, Mesh &mesh);
 };
