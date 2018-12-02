@@ -107,7 +107,7 @@ void Game::initMaterials()
 		0, 1));
 }
 
-void Game::initMeshes()
+void Game::initModels()
 {
 	this->meshes.push_back(
 		new Mesh(
@@ -115,7 +115,7 @@ void Game::initMeshes()
 			glm::vec3(0.f),
 			glm::vec3(0.f),
 			glm::vec3(1.f)
-			)
+		)
 	);
 
 	this->meshes.push_back(
@@ -126,10 +126,7 @@ void Game::initMeshes()
 			glm::vec3(1.f)
 		)
 	);
-}
 
-void Game::initModels()
-{
 	this->models.push_back(new Model(
 		glm::vec3(0.f),
 		this->materials[0],
@@ -138,6 +135,11 @@ void Game::initModels()
 		this->meshes
 		)
 	);
+
+	for (auto*& i : this->meshes)
+		delete i;
+
+	this->meshes.clear();
 }
 
 void Game::initLights()
@@ -223,7 +225,6 @@ Game::Game(
 	this->initShaders();
 	this->initTextures();
 	this->initMaterials();
-	this->initMeshes();
 	this->initModels();
 	this->initLights();
 	this->initUniforms();
@@ -242,9 +243,6 @@ Game::~Game()
 
 	for (size_t i = 0; i < this->materials.size(); i++)
 		delete this->materials[i];
-	
-	for (size_t i = 0; i < this->meshes.size(); i++)
-		delete this->meshes[i];
 
 	for (auto*& i : this->models)
 		delete i;
@@ -343,7 +341,7 @@ void Game::update()
 	this->updateDt();
 	this->updateInput();
 
-	//this->meshes[0]->rotate(glm::vec3(0.f, 1.f, 0.f));
+	this->models[0]->rotate(glm::vec3(0.f, 1.f, 0.f));
 }
 
 void Game::render()

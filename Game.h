@@ -84,7 +84,6 @@ private:
 	void initShaders();
 	void initTextures();
 	void initMaterials();
-	void initMeshes();
 	void initModels();
 	void initLights();
 	void initUniforms();
