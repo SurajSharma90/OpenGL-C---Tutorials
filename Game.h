@@ -63,9 +63,6 @@ private:
 	//Materials
 	std::vector<Material*> materials;
 
-	//Meshes
-	std::vector<Mesh*> meshes;
-
 	//Models
 	std::vector<Model*> models;
 
