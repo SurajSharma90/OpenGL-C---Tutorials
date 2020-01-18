@@ -74,12 +74,14 @@ public:
 		//Use a program
 		shader->use();
 
-		//Activate texture
-		this->overrideTextureDiffuse->bind(0);
-		this->overrideTextureSpecular->bind(1);
-
 		//Draw
 		for (auto& i : this->meshes)
-			i->render(shader);
+		{   
+			//Activate texture for each mesh
+			this->overrideTextureDiffuse->bind(0);
+			this->overrideTextureSpecular->bind(1);
+
+			i->render(shader); //Activates shader also
+		}
 	}
 };

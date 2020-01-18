@@ -2,6 +2,7 @@
 
 #include "libs.h"
 #include "Camera.h"
+#include "OBJLoader.h"
 
 //ZOOOOOOOOOOOM IN BEFORE RECORDING!
 
@@ -81,6 +82,7 @@ private:
 	void initShaders();
 	void initTextures();
 	void initMaterials();
+	void initOBJModels();
 	void initModels();
 	void initLights();
 	void initUniforms();

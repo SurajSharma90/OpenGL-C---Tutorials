@@ -126,6 +126,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="libs.h" />
