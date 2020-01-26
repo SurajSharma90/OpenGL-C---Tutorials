@@ -95,16 +95,52 @@ static std::vector<Vertex> loadOBJ(const char* file_name)
 		}
 		else if (prefix == "f")
 		{
+			int counter = 0;
+			while (ss >> temp_glint)
+			{
+				//Pushing indices into correct arrays
+				if (counter == 0)
+					vertex_position_indicies.push_back(temp_glint);
+				else if (counter == 1)
+					vertex_texcoord_indicies.push_back(temp_glint);
+				else if (counter == 2)
+					vertex_normal_indicies.push_back(temp_glint);
 
+				//Handling characters
+				if (ss.peek() == '/')
+				{
+					++counter;
+					ss.ignore(1, '/');
+				}
+				else if (ss.peek() == ' ')
+				{
+					++counter;
+					ss.ignore(1, ' ');
+				}
+
+				//Reset the counter
+				if (counter > 2)
+					counter = 0;
+			}	
 		}
 		else
 		{
 
 		}
+		//Build final vertex array (mesh)
+		vertices.resize(vertex_position_indicies.size(), Vertex());
+
+		//Load in all indices
+		for (size_t i = 0; i < vertices.size(); ++i)
+		{
+			vertices[i].position = vertex_positions[vertex_position_indicies[i]];
+			vertices[i].texcoord = vertex_texcoords[vertex_texcoord_indicies[i]];
+			vertices[i].normal = vertex_normals[vertex_normal_indicies[i]];
+			vertices[i].color = glm::vec3(1.f, 1.f, 1.f);
+		}
 
 		//DEBUG
-		std::cout << line << "\n";
-		std::cout << "Nr of vertices: " << vertex_positions.size() << "\n";
+		std::cout << "Nr of vertices: " << vertices.size() << "\n";
 	}
 
 	//Loaded success
