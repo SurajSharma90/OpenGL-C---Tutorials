@@ -4,6 +4,7 @@
 #include"Texture.h"
 #include"Shader.h"
 #include"Material.h"
+#include"OBJLoader.h"
 
 class Model
 {
@@ -37,6 +38,33 @@ public:
 		{
 			this->meshes.push_back(new Mesh(*i));
 		}
+
+		for (auto& i : this->meshes)
+		{
+			i->move(this->position);
+			i->setOrigin(this->position);
+		}
+	}
+
+	//OBJ file loaded model
+	Model(
+		glm::vec3 position,
+		Material* material,
+		Texture* orTexDif,
+		Texture* orTexSpec,
+		const char* objFile
+	)
+	{
+		this->position = position;
+		this->material = material;
+		this->overrideTextureDiffuse = orTexDif;
+		this->overrideTextureSpecular = orTexSpec;
+
+		std::vector<Vertex> mesh = loadOBJ(objFile);
+		this->meshes.push_back(new Mesh(mesh.data(), mesh.size(), NULL, 0, glm::vec3(1.f, 0.f, 0.f),
+			glm::vec3(0.f),
+			glm::vec3(0.f),
+			glm::vec3(1.f)));
 
 		for (auto& i : this->meshes)
 		{

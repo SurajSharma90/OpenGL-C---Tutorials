@@ -109,8 +109,7 @@ void Game::initMaterials()
 
 void Game::initOBJModels()
 {
-	std::vector<Vertex> temp;
-	temp = loadOBJ("OBJFiles/ddh.obj");
+
 }
 
 void Game::initModels()
@@ -162,6 +161,15 @@ void Game::initModels()
 		this->textures[TEX_CONTAINER_SPECULAR],
 		meshes
 		)
+	);
+
+	this->models.push_back(new Model(
+		glm::vec3(4.f, 0.f, 4.f),
+		this->materials[0],
+		this->textures[TEX_CONTAINER],
+		this->textures[TEX_CONTAINER_SPECULAR],
+		"OBJFiles/teapot.obj"
+	)
 	);
 
 	for (auto*& i : meshes)
