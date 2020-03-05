@@ -127,21 +127,22 @@ static std::vector<Vertex> loadOBJ(const char* file_name)
 		{
 
 		}
-		//Build final vertex array (mesh)
-		vertices.resize(vertex_position_indicies.size(), Vertex());
-
-		//Load in all indices
-		for (size_t i = 0; i < vertices.size(); ++i)
-		{
-			vertices[i].position = vertex_positions[vertex_position_indicies[i]-1];
-			vertices[i].texcoord = vertex_texcoords[vertex_texcoord_indicies[i]-1];
-			vertices[i].normal = vertex_normals[vertex_normal_indicies[i]-1];
-			vertices[i].color = glm::vec3(1.f, 1.f, 1.f);
-		}
-
-		//DEBUG
-		std::cout << "Nr of vertices: " << vertices.size() << "\n";
 	}
+
+	//Build final vertex array (mesh)
+	vertices.resize(vertex_position_indicies.size(), Vertex());
+
+	//Load in all indices
+	for (size_t i = 0; i < vertices.size(); ++i)
+	{
+		vertices[i].position = vertex_positions[vertex_position_indicies[i] - 1];
+		vertices[i].texcoord = vertex_texcoords[vertex_texcoord_indicies[i] - 1];
+		vertices[i].normal = vertex_normals[vertex_normal_indicies[i] - 1];
+		vertices[i].color = glm::vec3(1.f, 1.f, 1.f);
+	}
+
+	//DEBUG
+	std::cout << "Nr of vertices: " << vertices.size() << "\n";
 
 	//Loaded success
 	std::cout << "OBJ file loaded!" << "\n";

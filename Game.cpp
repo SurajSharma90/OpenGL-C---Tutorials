@@ -168,7 +168,7 @@ void Game::initModels()
 		this->materials[0],
 		this->textures[TEX_CONTAINER],
 		this->textures[TEX_CONTAINER_SPECULAR],
-		"OBJFiles/teapot.obj"
+		"OBJFiles/LSaber.obj"
 	)
 	);
 
@@ -197,6 +197,7 @@ void Game::updateUniforms()
 
 	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(this->ViewMatrix, "ViewMatrix");
 	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(this->camera.getPosition(), "cameraPos");
+	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(*this->lights[0], "lightPos0");
 
 	//Update framebuffer size and projection matrix
 	glfwGetFramebufferSize(this->window, &this->framebufferWidth, &this->framebufferHeight);
@@ -324,6 +325,12 @@ void Game::updateMouseInput()
 	//Set last X and Y
 	this->lastMouseX = this->mouseX;
 	this->lastMouseY = this->mouseY;
+
+	//Move light
+	if (glfwGetMouseButton(this->window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+	{
+		*this->lights[0] = this->camera.getPosition();
+	}
 }
 
 void Game::updateKeyboardInput()
