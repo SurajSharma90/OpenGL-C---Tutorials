@@ -62,8 +62,15 @@ void main()
 	vec3 specularFinal = calculateSpecular(material, vs_position, vs_normal, lightPos0, cameraPos);
 
 	//Attenuation
+	float distance = length(lightPos0 - vs_position);
+	//constant linear quadratic
+	float attenuation = 1.f / (1.f * 0.045f * distance * 0.0075f * (distance * distance));
 
 	//Final light
+	ambientFinal *= attenuation;
+	diffuseFinal *= attenuation;
+	specularFinal *= attenuation;
+
 	fs_color = 
 	texture(material.diffuseTex, vs_texcoord)
 	* (vec4(ambientFinal, 1.f) + vec4(diffuseFinal, 1.f) + vec4(specularFinal, 1.f));

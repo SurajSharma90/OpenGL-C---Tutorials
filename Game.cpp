@@ -103,7 +103,7 @@ void Game::initTextures()
 
 void Game::initMaterials()
 {
-	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(2.f), 
+	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), 
 		0, 1));
 }
 
@@ -115,6 +115,7 @@ void Game::initOBJModels()
 void Game::initModels()
 {
 	std::vector<Mesh*>meshes;
+	std::vector<Mesh*>meshes2;
 
 	meshes.push_back(
 		new Mesh(
@@ -133,6 +134,16 @@ void Game::initModels()
 			glm::vec3(0.f),
 			glm::vec3(0.f),
 			glm::vec3(1.f)
+		)
+	);
+
+	meshes2.push_back(
+		new Mesh(
+			&Quad(),
+			glm::vec3(0.f, 0.f, 0.f),
+			glm::vec3(0.f),
+			glm::vec3(-90.f, 0.f, 0.f),
+			glm::vec3(100.f)
 		)
 	);
 
@@ -164,15 +175,27 @@ void Game::initModels()
 	);
 
 	this->models.push_back(new Model(
+		glm::vec3(2.f, -5.f, 2.f),
+		this->materials[0],
+		this->textures[TEX_CONTAINER],
+		this->textures[TEX_CONTAINER_SPECULAR],
+		meshes2
+	)
+	);
+
+	this->models.push_back(new Model(
 		glm::vec3(4.f, 0.f, 4.f),
 		this->materials[0],
 		this->textures[TEX_CONTAINER],
 		this->textures[TEX_CONTAINER_SPECULAR],
-		"OBJFiles/LSaber.obj"
+		"OBJFiles/ddh.obj"
 	)
 	);
 
 	for (auto*& i : meshes)
+		delete i;
+
+	for (auto*& i : meshes2)
 		delete i;
 }
 
