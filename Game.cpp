@@ -199,9 +199,14 @@ void Game::initModels()
 		delete i;
 }
 
+void Game::initPointLights()
+{
+	this->pointLights.push_back(new PointLight(glm::vec3(0.f)));
+}
+
 void Game::initLights()
 {
-	this->lights.push_back(new glm::vec3(0.f, 0.f, 1.f));
+	this->initPointLights();
 }
 
 void Game::initUniforms()
@@ -210,7 +215,10 @@ void Game::initUniforms()
 	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(ViewMatrix, "ViewMatrix");
 	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(ProjectionMatrix, "ProjectionMatrix");
 
-	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(*this->lights[0], "lightPos0");
+	for each (PointLight* pl in this->pointLights)
+	{
+		pl->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
+	}
 }
 
 void Game::updateUniforms()
@@ -220,7 +228,11 @@ void Game::updateUniforms()
 
 	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(this->ViewMatrix, "ViewMatrix");
 	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(this->camera.getPosition(), "cameraPos");
-	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(*this->lights[0], "lightPos0");
+
+	for each (PointLight* pl in this->pointLights)
+	{
+		pl->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
+	}
 
 	//Update framebuffer size and projection matrix
 	glfwGetFramebufferSize(this->window, &this->framebufferWidth, &this->framebufferHeight);
@@ -306,8 +318,8 @@ Game::~Game()
 	for (auto*& i : this->models)
 		delete i;
 
-	for (size_t i = 0; i < this->lights.size(); i++)
-		delete this->lights[i];
+	for (size_t i = 0; i < this->pointLights.size(); i++)
+		delete this->pointLights[i];
 }
 
 //Accessor
@@ -352,7 +364,7 @@ void Game::updateMouseInput()
 	//Move light
 	if (glfwGetMouseButton(this->window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
 	{
-		*this->lights[0] = this->camera.getPosition();
+		this->pointLights[0]->setPosition(this->camera.getPosition());
 	}
 }
 

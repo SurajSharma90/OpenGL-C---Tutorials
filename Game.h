@@ -67,7 +67,7 @@ private:
 	std::vector<Model*> models;
 
 	//Lights
-	std::vector<glm::vec3*> lights;
+	std::vector<PointLight*> pointLights;
 
 //Private functions
 	void initGLFW();
@@ -83,6 +83,7 @@ private:
 	void initMaterials();
 	void initOBJModels();
 	void initModels();
+	void initPointLights();
 	void initLights();
 	void initUniforms();
 
